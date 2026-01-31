@@ -1,18 +1,15 @@
-let str="uoy"
-let left =0;
-let right=str.length-1;
-let isPalindrome=true;
-while(left<right){
-if(str[left]!==str[right]){
-    isPalindrome=false;
-    break;
-}  
-else{
-    left++;
-    right--;
+function ispalindrome(str) {
+    let start = 0;
+    let end = str.length - 1;
+    while (start < end) {
+        if (str[start] !== str[end]) {
+            return false;
+        }
+        start++;
+        end--;
     }
+    return true;
 }
-console.log(isPalindrome?"Palindrome":"Not a Palindrome");
-    
 
-
+let str="madam";
+ispalindrome(str) ?  console.log("Palindrome") : console.log("Not a Palindrome");
