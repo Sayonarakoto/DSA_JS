@@ -60,3 +60,17 @@ body{
 background: linear-gradient(90deg, rgba(201, 22, 181, 1) 0%, rgba(181, 66, 207, 1) 50%, rgba(96, 0, 128, 1) 100%);
 
 }
+.student-card {
+    border: 1px solid #06eedb;   /* thin cyan border */
+    border-radius: 10px;          /* rounded corners */
+    padding: 15px;                /* space inside the card */
+    margin-bottom: 10px;          /* space between cards */
+    background-color: #111;       /* dark background */
+    color: #c7f3ef;               /* text color */
+    transition: all 0.3s ease;    /* smooth hover effect */
+}
+.student-card:hover {
+    background-color: #06eedb; /* change card color on hover */
+    color: #000;               /* text color changes too */
+    transform: scale(1.02);    /* slightly bigger for effect */
+}
