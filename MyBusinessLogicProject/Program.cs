@@ -8,6 +8,10 @@ namespace MyBusinessLogicProject
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to My Business Logic Project!");
+            while(true)
+            {
+                
+           
             // Read student ID
             Console.Write("Enter student ID: ");
             int studentId = int.Parse(Console.ReadLine());
@@ -24,6 +28,13 @@ namespace MyBusinessLogicProject
             StudentType studentType =
                 Enum.Parse<StudentType>(studentTypeText, true);
 
+            Console.Write("Enter term (Fall, Spring, Summer): ");
+            string termText = Console.ReadLine();
+            Term term = Enum.Parse<Term>(termText, true);
+            // Read months late 
+            Console.Write("Enter months late: "); 
+            int monthsLate = int.Parse(Console.ReadLine());
+
             // Create Student object from console values
             Student student = new Student
             {
@@ -31,12 +42,15 @@ namespace MyBusinessLogicProject
                 Name = studentName,
                 StudentType = studentType
             };
-
-        }
+            Console.WriteLine("Calculating fee...");
+            FeeCalculator feeCalculator = new FeeCalculator();
+            StudentFee studentFee = feeCalculator.CalculateFee(student, term, monthsLate);
+            Console.WriteLine($"Final Fee: {studentFee.FinalFee}");
+        } }
         #region Classes
         public class StudentFee
         {
-            StudentType StudentType { get; set; }
+            public StudentType StudentType { get; set; }
             public int StudentId { get; set; }
 
             public Term CurrentTerm { get; set; }
@@ -72,6 +86,41 @@ namespace MyBusinessLogicProject
             private decimal ManagementSeatBaseFee = 30000m;
             private decimal LateFeePerMonth = 100m;
             
+            public StudentFee CalculateFee(Student student, Term term, int monthsLate)
+            {
+                decimal baseFee = 0;
+
+                if (student.StudentType == StudentType.Standard)
+                {
+                    baseFee = DefaultBaseFee;
+                }
+                else if (student.StudentType == StudentType.Management)
+                {
+                    baseFee = ManagementSeatBaseFee;
+                }
+                else if (student.StudentType == StudentType.Scholarship)
+                {
+                    baseFee = DefaultBaseFee;
+                }
+                decimal discount = 0;
+                if (student.StudentType == StudentType.Scholarship)
+                {
+                    discount = baseFee / 2m; // 50% discount for scholarship students
+                }
+                decimal lateFee = monthsLate * LateFeePerMonth;
+                decimal finalFee = baseFee - discount + lateFee;
+                return new StudentFee
+                {
+                    StudentId = student.Id,
+                    StudentType = student.StudentType,
+                    CurrentTerm = term,
+                    MonthsLate = monthsLate,
+                    Discount = discount,
+                    LateFee = lateFee,
+                    FinalFee = finalFee
+                };
+            }
+
         }
 
         #endregion
