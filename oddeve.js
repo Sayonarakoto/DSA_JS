@@ -10,4 +10,18 @@ for (let i=0;i<arr.length;i++){
     }
 }
 console.group("Odd and Even count in the array:");
-console.table({even, odd});
+console.table({even, odd}); 
+ 
+let newarr=[1,11,23,44,55,10,10,4,6]
+let greater=0;
+let lessetenOrLessr=0;
+for(let n of newarr){
+    if(n>10){
+        greater++
+    }
+    else{
+        tenOrLess++
+    }
+}
+console.group("Numbers greater than 10:");
+console.table({greater, tenOrLess});
